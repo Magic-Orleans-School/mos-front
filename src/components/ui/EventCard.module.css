@@ -1,0 +1,98 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: rgba(255, 248, 237, 0.72);
+  box-shadow: var(--shadow);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  gap: 12px;
+}
+
+.top {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.dateBox {
+  flex-shrink: 0;
+  width: 58px;
+  background: linear-gradient(180deg, var(--red), var(--red-dark));
+  color: var(--cream-light);
+  border-radius: 8px;
+  padding: 8px 6px;
+  text-align: center;
+  line-height: 1.1;
+}
+
+.dateBox .weekday {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.dateBox .day {
+  display: block;
+  font-size: 1.7rem;
+  font-weight: 900;
+}
+
+.dateBox .month {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.title {
+  font-size: 1.15rem;
+  text-transform: uppercase;
+  line-height: 1.2;
+  padding-top: 4px;
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: var(--brown);
+  font-size: 0.9rem;
+}
+
+.prices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: auto;
+}
+
+.price {
+  background: rgba(139, 18, 12, 0.06);
+  border: 1px solid rgba(139, 18, 12, 0.12);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.price span {
+  display: block;
+  color: var(--brown);
+}
+
+.price strong {
+  color: var(--red);
+}
+
+.register {
+  margin-top: 4px;
+  width: 100%;
+}

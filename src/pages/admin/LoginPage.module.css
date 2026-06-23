@@ -1,0 +1,62 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+}
+
+.box {
+  width: min(420px, 100%);
+  background: var(--cream-light);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 36px;
+  box-shadow: var(--shadow);
+}
+
+.box h1 {
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: var(--brown);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+
+.field label {
+  color: var(--brown);
+  font-weight: 800;
+  font-size: 0.9rem;
+}
+
+.field input {
+  padding: 12px 14px;
+  border-radius: 7px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.56);
+  color: var(--ink);
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.error {
+  color: var(--red);
+  font-weight: 700;
+  margin-bottom: 14px;
+  font-size: 0.9rem;
+}
+
+.submit {
+  width: 100%;
+  margin-top: 8px;
+}

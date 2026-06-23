@@ -1,0 +1,74 @@
+.container {
+  width: 90%;
+  margin: auto;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 13px 24px;
+  border-radius: 5px;
+  border: 1px solid var(--red);
+  background: linear-gradient(135deg, var(--red), var(--red-dark));
+  color: var(--cream-light);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  box-shadow: 0 10px 25px rgba(139, 18, 12, 0.18);
+  transition: 0.2s;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 28px rgba(139, 18, 12, 0.26);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: var(--red);
+  box-shadow: none;
+}
+
+.btn.small {
+  padding: 9px 14px;
+  font-size: 0.78rem;
+}
+
+.panel {
+  background: rgba(255, 248, 237, 0.72);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.ornament {
+  width: 140px;
+  height: 1px;
+  background: var(--red);
+  margin-top: 14px;
+  position: relative;
+}
+
+.ornament::after {
+  content: "◇";
+  position: absolute;
+  left: 50%;
+  top: -13px;
+  transform: translateX(-50%);
+  color: var(--red);
+  background: var(--cream-light);
+  padding: 0 6px;
+}
+
+.section-title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.11em;
+  color: var(--ink);
+}
+
