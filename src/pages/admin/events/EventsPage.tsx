@@ -4,12 +4,14 @@ import { eventsApi } from '../../../api/events';
 import PageLayout from '../../../components/layout/PageLayout';
 import Modal from '../../../components/ui/Modal';
 import EventForm from './EventForm';
+import RegistrationsList from './RegistrationsList';
 import styles from './EventsPage.module.css';
 
 export default function EventsPage() {
   const [events, setEvents] = useState<MosEvent[]>([]);
   const [selected, setSelected] = useState<MosEvent | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [viewingRegistrations, setViewingRegistrations] = useState<MosEvent | null>(null);
 
   useEffect(() => {
     eventsApi.getAll().then(setEvents);
@@ -71,6 +73,7 @@ export default function EventsPage() {
                 <span>{formatDate(event.date)} · {event.lieu} · {event.format}</span>
               </div>
               <div className={styles.actions}>
+                <button className="btn small secondary" onClick={() => setViewingRegistrations(event)}>Inscrits</button>
                 <button className="btn small secondary" onClick={() => openEdit(event)}>Modifier</button>
                 <button className="btn small" onClick={() => handleDelete(event.id)}>Supprimer</button>
               </div>
@@ -89,6 +92,15 @@ export default function EventsPage() {
             onSubmit={handleSubmit}
             onCancel={closeModal}
           />
+        </Modal>
+      )}
+
+      {viewingRegistrations && (
+        <Modal
+          title={`Inscrits — ${viewingRegistrations.titre}`}
+          onClose={() => setViewingRegistrations(null)}
+        >
+          <RegistrationsList eventId={viewingRegistrations.id} />
         </Modal>
       )}
     </PageLayout>

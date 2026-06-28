@@ -1,0 +1,33 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item {
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.35);
+}
+
+.item strong {
+  display: block;
+  text-transform: uppercase;
+}
+
+.item span {
+  color: var(--brown);
+  font-size: 0.9rem;
+}
+
+.empty {
+  color: var(--brown);
+  font-style: italic;
+}
+
+.count {
+  color: var(--brown);
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}

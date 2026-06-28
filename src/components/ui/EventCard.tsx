@@ -1,4 +1,7 @@
+import { useState } from 'react';
 import type { MosEvent } from '../../api/events';
+import Modal from './Modal';
+import RegistrationForm from './RegistrationForm';
 import styles from './EventCard.module.css';
 
 interface Props {
@@ -16,6 +19,7 @@ function parseDateParts(iso: string) {
 
 export default function EventCard({ event }: Props) {
   const { weekday, day, month } = parseDateParts(event.date);
+  const [modalOpen, setModalOpen] = useState(false);
 
   return (
     <article className={styles.card}>
@@ -43,8 +47,14 @@ export default function EventCard({ event }: Props) {
             <strong>{event.prixNonAdherent} €</strong>
           </div>
         </div>
-        <button className={`btn ${styles.register}`}>S'inscrire</button>
+        <button className={`btn ${styles.register}`} onClick={() => setModalOpen(true)}>S'inscrire</button>
       </div>
+
+      {modalOpen && (
+        <Modal title={`S'inscrire — ${event.titre}`} onClose={() => setModalOpen(false)}>
+          <RegistrationForm eventId={event.id} onClose={() => setModalOpen(false)} />
+        </Modal>
+      )}
     </article>
   );
 }
