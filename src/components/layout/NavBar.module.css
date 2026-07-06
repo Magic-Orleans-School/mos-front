@@ -15,6 +15,49 @@
   gap: 28px;
 }
 
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logo {
+  font-family: Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: var(--red);
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.socials a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--brown);
+  transition: 0.2s;
+}
+
+.socials a:hover {
+  color: var(--red);
+  border-color: var(--red);
+}
+
+.socials svg {
+  width: 16px;
+  height: 16px;
+  fill: currentColor;
+}
+
 .menu {
   display: flex;
   align-items: center;
@@ -39,14 +82,52 @@
   color: var(--red);
 }
 
+.adminRow {
+  background: rgba(139, 18, 12, 0.06);
+  border-top: 1px solid var(--line);
+}
+
+.adminRowInner {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.adminRowInner a,
+.adminRowInner button {
+  background: none;
+  border: 0;
+  color: var(--brown);
+  cursor: pointer;
+  font: inherit;
+  text-transform: uppercase;
+}
+
+.adminRowInner a:hover,
+.adminRowInner button:hover {
+  color: var(--red);
+}
+
+.adminBadge {
+  color: var(--red);
+  font-size: 0.72rem;
+  margin-right: 6px;
+}
+
 @media (max-width: 980px) {
   .menu {
-    display: none;
+    gap: 14px;
   }
 }
 
 @media (max-width: 620px) {
   .inner {
     min-height: 76px;
+    flex-wrap: wrap;
+    padding: 10px 0;
   }
 }

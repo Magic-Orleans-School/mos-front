@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styles from './Footer.module.css';
 
 export default function Footer() {
@@ -8,8 +9,8 @@ export default function Footer() {
           <p>© 2026 Magic Orléans School (M.O.S.)<br />Association de joueurs Magic: The Gathering à Orléans.</p>
         </div>
         <nav className={styles.links}>
-          <a href="#">Mentions légales</a>
-          <a href="#">Politique de confidentialité</a>
+          <Link to="/mentions-legales">Mentions légales</Link>
+          <Link to="/confidentialite">Politique de confidentialité</Link>
         </nav>
       </div>
     </footer>

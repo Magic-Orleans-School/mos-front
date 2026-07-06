@@ -1,0 +1,32 @@
+.legal {
+  max-width: 760px;
+}
+
+.legal h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+}
+
+.legal h2 {
+  font-size: 1.2rem;
+  text-transform: uppercase;
+  margin: 28px 0 10px;
+  color: var(--red);
+}
+
+.legal p,
+.legal li {
+  margin-bottom: 10px;
+  font-size: 0.98rem;
+}
+
+.legal ul {
+  padding-left: 22px;
+}
+
+.legal a {
+  color: var(--red);
+  text-decoration: underline;
+}
