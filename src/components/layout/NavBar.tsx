@@ -46,6 +46,7 @@ export default function NavBar() {
         </div>
         <div className={styles.menu}>
           <Link to="/#evenements">Événements</Link>
+          <Link to="/boutique">Boutique</Link>
           <Link to="/association">L'Asso</Link>
         </div>
       </div>

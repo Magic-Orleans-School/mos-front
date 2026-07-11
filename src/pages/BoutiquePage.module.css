@@ -1,0 +1,21 @@
+.intro {
+  margin-bottom: 24px;
+}
+
+.intro h1 {
+  font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 10px;
+}
+
+.intro p {
+  color: var(--brown);
+}
+
+.widget {
+  width: 100%;
+  border: none;
+  border-radius: 14px;
+  background: var(--cream-light);
+}
