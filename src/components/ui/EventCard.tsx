@@ -23,6 +23,9 @@ export default function EventCard({ event }: Props) {
 
   return (
     <article className={styles.card}>
+      {event.imageUrl && (
+        <img src={event.imageUrl} alt={`Affiche — ${event.titre}`} className={styles.poster} loading="lazy" />
+      )}
       <div className={styles.body}>
         <div className={styles.top}>
           <div className={styles.dateBox}>

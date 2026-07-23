@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
 import type { MosEvent, EventFormData } from '../../../api/events';
+import { uploadEventPoster } from '../../../api/storage';
 import styles from './EventForm.module.css';
 
 interface Props {
@@ -18,6 +19,7 @@ const EMPTY: EventFormData = {
   nbPlaces: '',
   prixAdherent: '',
   prixNonAdherent: '',
+  imageUrl: '',
 };
 
 function toFormData(event: MosEvent): EventFormData {
@@ -30,6 +32,7 @@ function toFormData(event: MosEvent): EventFormData {
     nbPlaces: event.nbPlaces?.toString() ?? '',
     prixAdherent: event.prixAdherent.toString(),
     prixNonAdherent: event.prixNonAdherent.toString(),
+    imageUrl: event.imageUrl ?? '',
   };
 }
 
@@ -37,6 +40,7 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
   const [values, setValues] = useState<EventFormData>(
     initial ? toFormData(initial) : EMPTY
   );
+  const [posterFile, setPosterFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -44,12 +48,20 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
     setValues(v => ({ ...v, [e.target.name]: e.target.value }));
   }
 
+  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setPosterFile(e.target.files?.[0] ?? null);
+  }
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setLoading(true);
     setError(null);
     try {
-      await onSubmit(values);
+      let imageUrl = values.imageUrl;
+      if (posterFile) {
+        imageUrl = await uploadEventPoster(posterFile);
+      }
+      await onSubmit({ ...values, imageUrl });
     } catch {
       setError('Une erreur est survenue, veuillez réessayer.');
       setLoading(false);
@@ -90,6 +102,12 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
         <div className={styles.field}>
           <label htmlFor="nbPlaces">Nombre de places</label>
           <input id="nbPlaces" name="nbPlaces" type="number" min="1" value={values.nbPlaces} onChange={handleChange} />
+        </div>
+        <div className={`${styles.field} ${styles.full}`}>
+          <label htmlFor="poster">
+            Affiche {values.imageUrl && !posterFile ? '(une affiche est déjà en place, en choisir une nouvelle la remplacera)' : ''}
+          </label>
+          <input id="poster" name="poster" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleFileChange} />
         </div>
       </div>
       {error && <p style={{ color: 'var(--red)', marginTop: '12px' }}>{error}</p>}

@@ -10,6 +10,7 @@ export interface MosEvent {
   nbPlaces: number | null;
   prixAdherent: number;
   prixNonAdherent: number;
+  imageUrl: string | null;
   createdByEmail: string;
   createdAt: string;
 }
@@ -23,6 +24,7 @@ export interface EventFormData {
   nbPlaces: string;
   prixAdherent: string;
   prixNonAdherent: string;
+  imageUrl: string;
 }
 
 export const eventsApi = {
