@@ -8,6 +8,7 @@ export interface MosEvent {
   format: string;
   extension: string | null;
   nbPlaces: number | null;
+  placesRestantes: number | null;
   prixAdherent: number;
   prixNonAdherent: number;
   imageUrl: string | null;
@@ -29,6 +30,7 @@ export interface EventFormData {
 
 export const eventsApi = {
   getAll: () => client.get<MosEvent[]>('/api/events'),
+  getById: (id: number) => client.get<MosEvent>(`/api/events/${id}`),
   create: (data: EventFormData) => client.post<MosEvent>('/api/events', data),
   update: (id: number, data: EventFormData) => client.put<MosEvent>(`/api/events/${id}`, data),
   delete: (id: number) => client.delete(`/api/events/${id}`),

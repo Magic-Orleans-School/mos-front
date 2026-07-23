@@ -15,7 +15,8 @@ async function request<T>(path: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`${BASE_URL}${path}`, { ...options, headers });
 
   if (!response.ok) {
-    throw new Error(`HTTP ${response.status}`);
+    const body = await response.json().catch(() => null);
+    throw new Error(body?.message ?? `HTTP ${response.status}`);
   }
 
   if (response.status === 204 || response.headers.get('content-length') === '0') {

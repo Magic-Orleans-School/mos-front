@@ -25,8 +25,8 @@ export default function RegistrationForm({ eventId, onClose }: Props) {
     try {
       await registrationsApi.create({ ...values, eventId });
       setDone(true);
-    } catch {
-      setError('Une erreur est survenue, veuillez réessayer.');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Une erreur est survenue, veuillez réessayer.');
       setLoading(false);
     }
   }

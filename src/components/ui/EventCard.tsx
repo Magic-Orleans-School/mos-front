@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import type { MosEvent } from '../../api/events';
+import { parseDateParts, formatHour, placesLabel, isFull } from '../../utils/event';
 import Modal from './Modal';
 import RegistrationForm from './RegistrationForm';
 import styles from './EventCard.module.css';
@@ -8,18 +10,12 @@ interface Props {
   event: MosEvent;
 }
 
-function parseDateParts(iso: string) {
-  const d = new Date(iso);
-  return {
-    weekday: d.toLocaleDateString('fr-FR', { weekday: 'short' }).slice(0, 3),
-    day: d.getDate(),
-    month: d.toLocaleDateString('fr-FR', { month: 'short' }).slice(0, 4),
-  };
-}
-
 export default function EventCard({ event }: Props) {
   const { weekday, day, month } = parseDateParts(event.date);
   const [modalOpen, setModalOpen] = useState(false);
+
+  const full = isFull(event);
+  const places = placesLabel(event);
 
   return (
     <article className={styles.card}>
@@ -33,12 +29,17 @@ export default function EventCard({ event }: Props) {
             <span className={styles.day}>{day}</span>
             <span className={styles.month}>{month}</span>
           </div>
-          <h3 className={styles.title}>{event.titre}</h3>
+          <h3 className={styles.title}>
+            <Link to={`/evenements/${event.id}`} className={styles.titleLink}>{event.titre}</Link>
+          </h3>
         </div>
         <div className={styles.meta}>
+          <span>🕐 {formatHour(event.date)}</span>
           <span>📍 {event.lieu}</span>
           <span>🎴 {event.format}{event.extension ? ` · ${event.extension}` : ''}</span>
-          {event.nbPlaces && <span>♟ {event.nbPlaces} places</span>}
+          {places && (
+            <span className={full ? styles.full : undefined}>♟ {places}</span>
+          )}
         </div>
         <div className={styles.prices}>
           <div className={styles.price}>
@@ -50,7 +51,16 @@ export default function EventCard({ event }: Props) {
             <strong>{event.prixNonAdherent} €</strong>
           </div>
         </div>
-        <button className={`btn ${styles.register}`} onClick={() => setModalOpen(true)}>S'inscrire</button>
+        <div className={styles.actions}>
+          <Link to={`/evenements/${event.id}`} className="btn secondary">Détails</Link>
+          <button
+            className="btn"
+            onClick={() => setModalOpen(true)}
+            disabled={full}
+          >
+            {full ? 'Complet' : "S'inscrire"}
+          </button>
+        </div>
       </div>
 
       {modalOpen && (

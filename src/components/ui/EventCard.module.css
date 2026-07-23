@@ -67,6 +67,10 @@
   padding-top: 4px;
 }
 
+.titleLink:hover {
+  color: var(--red);
+}
+
 .meta {
   display: flex;
   flex-direction: column;
@@ -99,7 +103,18 @@
   color: var(--red);
 }
 
-.register {
+.full {
+  color: var(--red);
+  font-weight: 800;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   margin-top: 4px;
+}
+
+.actions > * {
   width: 100%;
 }

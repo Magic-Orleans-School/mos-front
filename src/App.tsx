@@ -4,6 +4,7 @@ import RequireAdmin from './components/RequireAdmin';
 import PublicPage from './pages/PublicPage';
 import AssociationPage from './pages/AssociationPage';
 import BoutiquePage from './pages/BoutiquePage';
+import EventDetailPage from './pages/EventDetailPage';
 import MentionsLegalesPage from './pages/legal/MentionsLegalesPage';
 import ConfidentialitePage from './pages/legal/ConfidentialitePage';
 import LoginPage from './pages/admin/LoginPage';
@@ -16,6 +17,7 @@ export default function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<PublicPage />} />
+          <Route path="/evenements/:id" element={<EventDetailPage />} />
           <Route path="/association" element={<AssociationPage />} />
           <Route path="/boutique" element={<BoutiquePage />} />
           <Route path="/mentions-legales" element={<MentionsLegalesPage />} />
