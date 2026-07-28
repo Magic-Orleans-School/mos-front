@@ -35,6 +35,12 @@
   outline-offset: 2px;
 }
 
+.counter {
+  color: var(--brown);
+  font-size: 0.82rem;
+  align-self: flex-end;
+}
+
 .actions {
   display: flex;
   justify-content: flex-end;

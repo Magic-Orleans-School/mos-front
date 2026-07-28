@@ -90,6 +90,15 @@
   font-weight: 800;
 }
 
+.about {
+  padding: 28px;
+  margin-top: 28px;
+}
+
+.about h2 {
+  margin-bottom: 16px;
+}
+
 .state {
   color: var(--brown);
   font-style: italic;

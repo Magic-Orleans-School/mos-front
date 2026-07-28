@@ -7,8 +7,9 @@ export interface MosEvent {
   lieu: string;
   format: string;
   extension: string | null;
+  description: string | null;
   nbPlaces: number | null;
-  placesRestantes: number | null;
+  placesRestantes?: number | null;
   prixAdherent: number;
   prixNonAdherent: number;
   imageUrl: string | null;
@@ -22,6 +23,7 @@ export interface EventFormData {
   lieu: string;
   format: string;
   extension: string;
+  description: string;
   nbPlaces: string;
   prixAdherent: string;
   prixNonAdherent: string;

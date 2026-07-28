@@ -6,6 +6,7 @@ import { placesLabel, isFull } from '../utils/event';
 import PageLayout from '../components/layout/PageLayout';
 import Modal from '../components/ui/Modal';
 import RegistrationForm from '../components/ui/RegistrationForm';
+import Markdown from '../components/ui/Markdown';
 import styles from './EventDetailPage.module.css';
 
 function formatFullDate(iso: string) {
@@ -90,6 +91,13 @@ export default function EventDetailPage() {
           </button>
         </div>
       </div>
+
+      {event.description && (
+        <section className={`panel ${styles.about}`}>
+          <h2 className="section-title">À propos</h2>
+          <Markdown content={event.description} />
+        </section>
+      )}
 
       {modalOpen && (
         <Modal title={`S'inscrire — ${event.titre}`} onClose={() => setModalOpen(false)}>

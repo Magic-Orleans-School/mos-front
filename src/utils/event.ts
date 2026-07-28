@@ -22,7 +22,9 @@ export function isFull(event: MosEvent) {
 
 /** Libellé des places, ou null si l'événement n'a pas de limite. */
 export function placesLabel(event: MosEvent) {
-  if (event.placesRestantes === null) return null;
-  if (event.placesRestantes === 0) return 'Complet';
-  return `${event.placesRestantes} place${event.placesRestantes > 1 ? 's' : ''} restante${event.placesRestantes > 1 ? 's' : ''}`;
+  const restantes = event.placesRestantes;
+  if (restantes == null) return null;
+  if (restantes === 0) return 'Complet';
+  const s = restantes > 1 ? 's' : '';
+  return `${restantes} place${s} restante${s}`;
 }

@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import type { FormEvent } from 'react';
+import MDEditor from '@uiw/react-md-editor';
 import type { MosEvent, EventFormData } from '../../../api/events';
 import { uploadEventPoster } from '../../../api/storage';
 import styles from './EventForm.module.css';
+
+const DESCRIPTION_MAX = 5000;
 
 interface Props {
   initial?: MosEvent;
@@ -16,6 +19,7 @@ const EMPTY: EventFormData = {
   lieu: '',
   format: '',
   extension: '',
+  description: '',
   nbPlaces: '',
   prixAdherent: '',
   prixNonAdherent: '',
@@ -29,6 +33,7 @@ function toFormData(event: MosEvent): EventFormData {
     lieu: event.lieu,
     format: event.format,
     extension: event.extension ?? '',
+    description: event.description ?? '',
     nbPlaces: event.nbPlaces?.toString() ?? '',
     prixAdherent: event.prixAdherent.toString(),
     prixNonAdherent: event.prixNonAdherent.toString(),
@@ -50,6 +55,13 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPosterFile(e.target.files?.[0] ?? null);
+  }
+
+  function handleDescriptionChange(value?: string) {
+    const next = value ?? '';
+    if (next.length <= DESCRIPTION_MAX) {
+      setValues(v => ({ ...v, description: next }));
+    }
   }
 
   async function handleSubmit(e: FormEvent) {
@@ -108,6 +120,20 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
             Affiche {values.imageUrl && !posterFile ? '(une affiche est déjà en place, en choisir une nouvelle la remplacera)' : ''}
           </label>
           <input id="poster" name="poster" type="file" accept="image/jpeg,image/png,image/webp" onChange={handleFileChange} />
+        </div>
+        <div className={`${styles.field} ${styles.full}`} data-color-mode="light">
+          <label htmlFor="description">Description</label>
+          <MDEditor
+            id="description"
+            value={values.description}
+            onChange={handleDescriptionChange}
+            preview="edit"
+            height={260}
+            textareaProps={{ placeholder: 'Décrivez l\'événement (Markdown pris en charge)...' }}
+          />
+          <small className={styles.counter}>
+            {values.description.length} / {DESCRIPTION_MAX} caractères
+          </small>
         </div>
       </div>
       {error && <p style={{ color: 'var(--red)', marginTop: '12px' }}>{error}</p>}
