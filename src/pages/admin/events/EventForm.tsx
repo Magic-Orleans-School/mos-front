@@ -24,6 +24,7 @@ const EMPTY: EventFormData = {
   prixAdherent: '',
   prixNonAdherent: '',
   imageUrl: '',
+  archived: false,
 };
 
 function toFormData(event: MosEvent): EventFormData {
@@ -38,6 +39,7 @@ function toFormData(event: MosEvent): EventFormData {
     prixAdherent: event.prixAdherent.toString(),
     prixNonAdherent: event.prixNonAdherent.toString(),
     imageUrl: event.imageUrl ?? '',
+    archived: event.archived,
   };
 }
 

@@ -14,7 +14,9 @@ export default function EventsPage() {
   const [viewingRegistrations, setViewingRegistrations] = useState<MosEvent | null>(null);
 
   useEffect(() => {
-    eventsApi.getAll().then(setEvents);
+    Promise.all([eventsApi.getAll(), eventsApi.getArchived()]).then(([active, archived]) =>
+      setEvents([...active, ...archived])
+    );
   }, []);
 
   function openCreate() {
@@ -43,8 +45,17 @@ export default function EventsPage() {
     closeModal();
   }
 
+  async function handleToggleArchive(event: MosEvent) {
+    if (event.archived) {
+      await eventsApi.unarchive(event.id);
+    } else {
+      await eventsApi.archive(event.id);
+    }
+    setEvents(evs => evs.map(e => (e.id === event.id ? { ...e, archived: !e.archived } : e)));
+  }
+
   async function handleDelete(id: number) {
-    if (!confirm('Supprimer cet événement ?')) return;
+    if (!confirm('Supprimer définitivement cet événement et ses inscriptions ?')) return;
     await eventsApi.delete(id);
     setEvents(evs => evs.filter(e => e.id !== id));
   }
@@ -55,6 +66,31 @@ export default function EventsPage() {
     });
   }
 
+  const activeEvents = events.filter(e => !e.archived);
+  const archivedEvents = events.filter(e => e.archived);
+
+  function renderItem(event: MosEvent) {
+    return (
+      <li key={event.id} className={`${styles.item} ${event.archived ? styles.archived : ''}`}>
+        <div className={styles.info}>
+          <strong>
+            {event.titre}
+            {event.archived && <span className={styles.badge}>Archivé</span>}
+          </strong>
+          <span>{formatDate(event.date)} · {event.lieu} · {event.format}</span>
+        </div>
+        <div className={styles.actions}>
+          <button className="btn small secondary" onClick={() => setViewingRegistrations(event)}>Inscrits</button>
+          <button className="btn small secondary" onClick={() => openEdit(event)}>Modifier</button>
+          <button className="btn small secondary" onClick={() => handleToggleArchive(event)}>
+            {event.archived ? 'Publier' : 'Archiver'}
+          </button>
+          <button className="btn small" onClick={() => handleDelete(event.id)}>Supprimer</button>
+        </div>
+      </li>
+    );
+  }
+
   return (
     <PageLayout>
       <div className={styles.header}>
@@ -62,24 +98,17 @@ export default function EventsPage() {
         <button className="btn" onClick={openCreate}>+ Créer un événement</button>
       </div>
 
-      {events.length === 0 ? (
-        <p className={styles.empty}>Aucun événement pour le moment.</p>
+      {activeEvents.length === 0 ? (
+        <p className={styles.empty}>Aucun événement publié pour le moment.</p>
       ) : (
-        <ul className={styles.list}>
-          {events.map(event => (
-            <li key={event.id} className={styles.item}>
-              <div className={styles.info}>
-                <strong>{event.titre}</strong>
-                <span>{formatDate(event.date)} · {event.lieu} · {event.format}</span>
-              </div>
-              <div className={styles.actions}>
-                <button className="btn small secondary" onClick={() => setViewingRegistrations(event)}>Inscrits</button>
-                <button className="btn small secondary" onClick={() => openEdit(event)}>Modifier</button>
-                <button className="btn small" onClick={() => handleDelete(event.id)}>Supprimer</button>
-              </div>
-            </li>
-          ))}
-        </ul>
+        <ul className={styles.list}>{activeEvents.map(renderItem)}</ul>
+      )}
+
+      {archivedEvents.length > 0 && (
+        <>
+          <h2 className={styles.archivedTitle}>Événements archivés</h2>
+          <ul className={styles.list}>{archivedEvents.map(renderItem)}</ul>
+        </>
       )}
 
       {modalOpen && (
