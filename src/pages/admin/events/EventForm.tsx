@@ -6,6 +6,9 @@ import { uploadEventPoster } from '../../../api/storage';
 import styles from './EventForm.module.css';
 
 const DESCRIPTION_MAX = 5000;
+const POSTER_MAX_BYTES = 10 * 1024 * 1024; // 10 Mo, aligné sur la limite du bucket
+
+type Status = 'idle' | 'uploading' | 'saving';
 
 interface Props {
   initial?: MosEvent;
@@ -49,14 +52,22 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
   );
   const [posterFile, setPosterFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState<Status>('idle');
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setValues(v => ({ ...v, [e.target.name]: e.target.value }));
   }
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPosterFile(e.target.files?.[0] ?? null);
+    const file = e.target.files?.[0] ?? null;
+    if (file && file.size > POSTER_MAX_BYTES) {
+      setError('L\'affiche dépasse 10 Mo. Choisissez une image plus légère.');
+      setPosterFile(null);
+      e.target.value = '';
+      return;
+    }
+    setError(null);
+    setPosterFile(file);
   }
 
   function handleDescriptionChange(value?: string) {
@@ -68,19 +79,26 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
-    setLoading(true);
     setError(null);
     try {
       let imageUrl = values.imageUrl;
       if (posterFile) {
+        setStatus('uploading');
         imageUrl = await uploadEventPoster(posterFile);
       }
+      setStatus('saving');
       await onSubmit({ ...values, imageUrl });
     } catch {
       setError('Une erreur est survenue, veuillez réessayer.');
-      setLoading(false);
+      setStatus('idle');
     }
   }
+
+  const busy = status !== 'idle';
+  const submitLabel =
+    status === 'uploading' ? 'Envoi de l\'affiche…' :
+    status === 'saving' ? 'Enregistrement…' :
+    'Enregistrer';
 
   return (
     <form onSubmit={handleSubmit}>
@@ -140,9 +158,9 @@ export default function EventForm({ initial, onSubmit, onCancel }: Props) {
       </div>
       {error && <p style={{ color: 'var(--red)', marginTop: '12px' }}>{error}</p>}
       <div className={styles.actions}>
-        <button type="button" className="btn secondary" onClick={onCancel}>Annuler</button>
-        <button type="submit" className="btn" disabled={loading}>
-          {loading ? 'Enregistrement...' : 'Enregistrer'}
+        <button type="button" className="btn secondary" onClick={onCancel} disabled={busy}>Annuler</button>
+        <button type="submit" className="btn" disabled={busy}>
+          {submitLabel}
         </button>
       </div>
     </form>

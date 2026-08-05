@@ -42,59 +42,16 @@
 }
 
 .visual {
-  min-height: 340px;
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
 }
 
-.flag {
-  position: absolute;
-  width: min(480px, 85%);
-  height: 190px;
-  background: linear-gradient(135deg, #4e0806, var(--red), #2d0504);
-  clip-path: polygon(0 18%, 22% 2%, 54% 14%, 100% 0, 82% 36%, 100% 72%, 58% 62%, 24% 86%, 0 68%);
-  transform: rotate(-9deg);
-  box-shadow: 0 22px 45px rgba(91, 9, 6, 0.35);
-}
-
-.flag::after {
-  content: "M.O.S.";
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--cream-light);
-  font-family: Georgia, serif;
-  font-size: clamp(2.4rem, 6vw, 4rem);
-  font-weight: 900;
-  letter-spacing: 0.12em;
-  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.spear {
-  position: absolute;
-  right: 12%;
-  width: 9px;
-  height: 400px;
-  background: linear-gradient(90deg, #2b1a12, #8b6b54, #2b1a12);
-  transform: rotate(14deg);
-  border-radius: 99px;
-  box-shadow: 0 18px 38px rgba(43, 26, 18, 0.32);
-}
-
-.spear::before {
-  content: "";
-  position: absolute;
-  top: -56px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 48px;
-  height: 74px;
-  background: linear-gradient(135deg, #2b1a12, #9a6a43);
-  clip-path: polygon(50% 0, 100% 58%, 55% 100%, 0 58%);
+.image {
+  width: 100%;
+  max-width: 440px;
+  height: auto;
+  filter: drop-shadow(0 22px 45px rgba(43, 26, 18, 0.28));
 }
 
 @media (max-width: 980px) {
@@ -102,16 +59,7 @@
     grid-template-columns: 1fr;
   }
 
-  .visual {
-    min-height: 260px;
-  }
-
-  .flag {
-    height: 150px;
-  }
-
-  .spear {
-    height: 300px;
-    right: 6%;
+  .image {
+    max-width: 320px;
   }
 }

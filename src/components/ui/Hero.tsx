@@ -15,9 +15,8 @@ export default function Hero() {
         </p>
         <Link to="/association" className="btn">Découvrir l'association ›</Link>
       </div>
-      <div className={styles.visual} aria-hidden="true">
-        <div className={styles.flag}></div>
-        <div className={styles.spear}></div>
+      <div className={styles.visual}>
+        <img src="/hero.png" alt="Porte-étendard M.O.S." className={styles.image} />
       </div>
     </header>
   );
