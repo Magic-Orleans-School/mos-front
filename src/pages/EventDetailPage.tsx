@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { MosEvent } from '../api/events';
 import { eventsApi } from '../api/events';
-import { placesLabel, isFull } from '../utils/event';
+import { placesLabel, isFull, registrationState } from '../utils/event';
 import PageLayout from '../components/layout/PageLayout';
 import Modal from '../components/ui/Modal';
 import RegistrationForm from '../components/ui/RegistrationForm';
@@ -85,9 +85,9 @@ export default function EventDetailPage() {
           <button
             className={`btn ${styles.register}`}
             onClick={() => setModalOpen(true)}
-            disabled={isFull(event)}
+            disabled={registrationState(event).disabled}
           >
-            {isFull(event) ? 'Complet' : "S'inscrire"}
+            {registrationState(event).label}
           </button>
         </div>
       </div>

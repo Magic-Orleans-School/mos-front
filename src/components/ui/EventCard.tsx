@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { MosEvent } from '../../api/events';
-import { parseDateParts, formatHour, placesLabel, isFull } from '../../utils/event';
+import { parseDateParts, formatHour, placesLabel, isFull, registrationState } from '../../utils/event';
 import Modal from './Modal';
 import RegistrationForm from './RegistrationForm';
 import styles from './EventCard.module.css';
@@ -16,6 +16,7 @@ export default function EventCard({ event }: Props) {
 
   const full = isFull(event);
   const places = placesLabel(event);
+  const registration = registrationState(event);
 
   return (
     <article className={styles.card}>
@@ -56,9 +57,9 @@ export default function EventCard({ event }: Props) {
           <button
             className="btn"
             onClick={() => setModalOpen(true)}
-            disabled={full}
+            disabled={registration.disabled}
           >
-            {full ? 'Complet' : "S'inscrire"}
+            {registration.label}
           </button>
         </div>
       </div>
