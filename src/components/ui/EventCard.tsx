@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import type { MosEvent } from '../../api/events';
-import { parseDateParts, formatHour, placesLabel, isFull, registrationState } from '../../utils/event';
+import { parseDateParts, formatHour, placesLabel, isFull, hasPrice, registrationState } from '../../utils/event';
 import Modal from './Modal';
 import RegistrationForm from './RegistrationForm';
 import styles from './EventCard.module.css';
@@ -42,16 +42,18 @@ export default function EventCard({ event }: Props) {
             <span className={full ? styles.full : undefined}>♟ {places}</span>
           )}
         </div>
-        <div className={styles.prices}>
-          <div className={styles.price}>
-            <span>Adhérent</span>
-            <strong>{event.prixAdherent} €</strong>
+        {hasPrice(event) && (
+          <div className={styles.prices}>
+            <div className={styles.price}>
+              <span>Adhérent</span>
+              <strong>{event.prixAdherent} €</strong>
+            </div>
+            <div className={styles.price}>
+              <span>Non adhérent</span>
+              <strong>{event.prixNonAdherent} €</strong>
+            </div>
           </div>
-          <div className={styles.price}>
-            <span>Non adhérent</span>
-            <strong>{event.prixNonAdherent} €</strong>
-          </div>
-        </div>
+        )}
         <div className={styles.actions}>
           <Link to={`/evenements/${event.id}`} className="btn secondary">Détails</Link>
           <button

@@ -20,6 +20,11 @@ export function isFull(event: MosEvent) {
   return event.placesRestantes === 0;
 }
 
+/** Vrai si au moins un des deux tarifs est non nul (sinon l'événement est gratuit). */
+export function hasPrice(event: MosEvent) {
+  return event.prixAdherent > 0 || event.prixNonAdherent > 0;
+}
+
 /**
  * Vrai à partir de minuit le jour de l'événement : les inscriptions sont
  * closes le jour J et les jours suivants (ouvertes jusqu'à la veille incluse).

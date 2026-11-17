@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import type { MosEvent } from '../api/events';
 import { eventsApi } from '../api/events';
-import { placesLabel, isFull, registrationState } from '../utils/event';
+import { placesLabel, isFull, hasPrice, registrationState } from '../utils/event';
 import PageLayout from '../components/layout/PageLayout';
 import Modal from '../components/ui/Modal';
 import RegistrationForm from '../components/ui/RegistrationForm';
@@ -72,16 +72,18 @@ export default function EventDetailPage() {
               </span>
             )}
           </div>
-          <div className={styles.prices}>
-            <div className={styles.price}>
-              <span>Adhérent</span>
-              <strong>{event.prixAdherent} €</strong>
+          {hasPrice(event) && (
+            <div className={styles.prices}>
+              <div className={styles.price}>
+                <span>Adhérent</span>
+                <strong>{event.prixAdherent} €</strong>
+              </div>
+              <div className={styles.price}>
+                <span>Non adhérent</span>
+                <strong>{event.prixNonAdherent} €</strong>
+              </div>
             </div>
-            <div className={styles.price}>
-              <span>Non adhérent</span>
-              <strong>{event.prixNonAdherent} €</strong>
-            </div>
-          </div>
+          )}
           <button
             className={`btn ${styles.register}`}
             onClick={() => setModalOpen(true)}
